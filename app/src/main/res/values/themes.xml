@@ -1,0 +1,43 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Drivo" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/background</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- Default Font Family -->
+        <item name="android:fontFamily">@font/urbanist_regular</item>
+    </style>
+
+    <style name="Theme.Drivo" parent="Base.Theme.Drivo" />
+
+    <!-- Style for rounded buttons -->
+    <style name="Widget.Drivo.Button" parent="Widget.Material3.Button">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Drivo.Button</item>
+        <item name="backgroundTint">@color/primary</item>
+        <item name="android:textColor">@color/onPrimary</item>
+        <item name="android:fontFamily">@font/urbanist_bold</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="ShapeAppearance.Drivo.Button" parent="">
+        <item name="cornerSize">24dp</item>
+    </style>
+
+    <!-- Text Styles -->
+    <style name="TextAppearance.Drivo.Headline" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:fontFamily">@font/urbanist_extrabold</item>
+        <item name="android:textColor">@color/onBackground</item>
+    </style>
+
+    <style name="TextAppearance.Drivo.Title" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:fontFamily">@font/urbanist_bold</item>
+        <item name="android:textColor">@color/onBackground</item>
+    </style>
+
+    <style name="TextAppearance.Drivo.Body" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:fontFamily">@font/urbanist_regular</item>
+        <item name="android:textColor">@color/gray_text</item>
+    </style>
+</resources>

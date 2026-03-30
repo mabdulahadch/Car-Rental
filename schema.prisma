@@ -1,0 +1,70 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Showroom {
+  id          String   @id @default(uuid())
+  name        String
+  email       String   @unique
+  contact     String
+  location    String
+  image       String?
+  cars        Car[]
+  createdAt   DateTime @default(now())
+}
+
+model Car {
+  id            String   @id @default(uuid())
+  brand         String
+  model         String
+  category      String   // e.g., Regular, Luxury
+  pricePerDay   Float
+  seats         Int
+  enginePower   String?
+  maxSpeed      String?
+  fuelType      String   // Electric, Petrol, Diesel, Hybrid
+  color         String
+  description   String?
+  images        String[] // Array of image URLs
+  registration  String
+  features      String[] // e.g., Autopilot, Auto Parking
+  showroom      Showroom @relation(fields: [showroomId], references: [id])
+  showroomId    String
+  reviews       Review[]
+  bookings      Booking[]
+  isAvailable   Boolean  @default(true)
+  location      String
+  createdAt     DateTime @default(now())
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  userName  String
+  userImage String?
+  rating    Float
+  comment   String
+  car       Car      @relation(fields: [carId], references: [id])
+  carId     String
+  createdAt DateTime @default(now())
+}
+
+model Booking {
+  id            String   @id @default(uuid())
+  customerName  String
+  customerEmail String
+  customerPhone String
+  gender        String
+  pickupDate    DateTime
+  returnDate    DateTime
+  totalAmount   Float
+  withDriver    Boolean  @default(false)
+  status        String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  car           Car      @relation(fields: [carId], references: [id])
+  carId         String
+  createdAt     DateTime @default(now())
+}
