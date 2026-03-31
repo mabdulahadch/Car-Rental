@@ -1,44 +1,36 @@
 package com.example.carrental.models;
 
-import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Car {
-    public String id;
-    public String brand;
-    public String model;
-    public String category;
+    private String id;
+    private String brand;
+    private String model;
+    private String category;
+    private double priceperday;
+    private int seats;
+    private String enginepower;
+    private String maxspeed;
+    private String fueltype;
+    private String color;
+    private String description;
+    private List<String> images;
+    private String registration;
+    private List<String> features;
+    private String showroomid;
+    private String location;
+    private boolean isavailable;
+    private float rating;
+    private int reviewcount;
 
-    @SerializedName("priceperday")
-    public double pricePerDay;
-
-    public int seats;
-
-    @SerializedName("enginepower")
-    public String enginePower;
-
-    @SerializedName("maxspeed")
-    public String maxSpeed;
-
-    @SerializedName("fueltype")
-    public String fuelType;
-
-    public String color;
-    public String description;
-    public List<String> images;
-    public String registration;
-    public List<String> features;
-
-    @SerializedName("showroomid")
-    public String showroomId;
-
-    public String location;
-
-    @SerializedName("isavailable")
-    public boolean isAvailable;
-
-    public double rating;
-
-    @SerializedName("reviewcount")
-    public int reviewCount;
+    // Getters
+    public String getBrand() { return brand; }
+    public String getModel() { return model; }
+    public double getPriceperday() { return priceperday; }
+    public List<String> getImages() { return images; }
+    public String getLocation() { return location; }
+    public float getRating() { return rating; }
+    public boolean isAvailable() { return isavailable; }
+    
+    // Setters can be added if needed
 }

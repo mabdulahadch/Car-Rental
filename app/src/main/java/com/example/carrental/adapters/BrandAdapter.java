@@ -1,22 +1,27 @@
 package com.example.carrental.adapters;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.carrental.R;
 import com.example.carrental.databinding.ItemBrandBinding;
+import com.example.carrental.models.Brand;
 import java.util.List;
 
 public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.BrandViewHolder> {
-    private List<String> brands;
+
+    private List<Brand> brandList;
     private OnBrandClickListener listener;
 
     public interface OnBrandClickListener {
-        void onBrandClick(String brand);
+        void onBrandClick(Brand brand);
     }
 
-    public BrandAdapter(List<String> brands, OnBrandClickListener listener) {
-        this.brands = brands;
+    public BrandAdapter(List<Brand> brandList, OnBrandClickListener listener) {
+        this.brandList = brandList;
         this.listener = listener;
     }
 
@@ -29,16 +34,37 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.BrandViewHol
 
     @Override
     public void onBindViewHolder(@NonNull BrandViewHolder holder, int position) {
-        String brand = brands.get(position);
-        holder.binding.tvBrandName.setText(brand);
-        // Set brand logo based on name (placeholder logic)
-        // holder.binding.ivBrandLogo.setImageResource(...);
-        holder.itemView.setOnClickListener(v -> listener.onBrandClick(brand));
+        Brand brand = brandList.get(position);
+        holder.binding.tvBrandName.setText(brand.getName());
+        
+//        if (brand.getIconRes() != 0) {
+//            holder.binding.ivBrandLogo.setVisibility(View.VISIBLE);
+//            holder.binding.ivBrandLogo.setImageResource(brand.getIconRes());
+//        } else {
+//            holder.binding.ivBrandLogo.setVisibility(View.GONE);
+//        }
+
+        if (brand.isSelected()) {
+            holder.binding.getRoot().getBackground().setTint(ContextCompat.getColor(holder.itemView.getContext(), R.color.primary));
+            holder.binding.tvBrandName.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.white));
+//            holder.binding.ivBrandLogo.setColorFilter(ContextCompat.getColor(holder.itemView.getContext(), R.color.white));
+        } else {
+            holder.binding.getRoot().getBackground().setTint(ContextCompat.getColor(holder.itemView.getContext(), R.color.surface));
+            holder.binding.tvBrandName.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.onBackground));
+//            holder.binding.ivBrandLogo.setColorFilter(ContextCompat.getColor(holder.itemView.getContext(), R.color.onBackground));
+        }
+
+        holder.itemView.setOnClickListener(v -> {
+            for (Brand b : brandList) b.setSelected(false);
+            brand.setSelected(true);
+            notifyDataSetChanged();
+            if (listener != null) listener.onBrandClick(brand);
+        });
     }
 
     @Override
     public int getItemCount() {
-        return brands.size();
+        return brandList.size();
     }
 
     public static class BrandViewHolder extends RecyclerView.ViewHolder {

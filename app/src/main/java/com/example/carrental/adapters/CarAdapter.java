@@ -1,61 +1,62 @@
 package com.example.carrental.adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
-import com.example.carrental.databinding.ItemCarCardBinding;
+import com.example.carrental.R;
+import com.example.carrental.databinding.ItemCarBinding;
 import com.example.carrental.models.Car;
 import java.util.List;
 
 public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
-    private List<Car> cars;
-    private OnCarClickListener listener;
 
-    public interface OnCarClickListener {
-        void onCarClick(Car car);
-    }
+    private List<Car> carList;
 
-    public CarAdapter(List<Car> cars, OnCarClickListener listener) {
-        this.cars = cars;
-        this.listener = listener;
+    public CarAdapter(List<Car> carList) {
+        this.carList = carList;
     }
 
     @NonNull
     @Override
     public CarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemCarCardBinding binding = ItemCarCardBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ItemCarBinding binding = ItemCarBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new CarViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CarViewHolder holder, int position) {
-        Car car = cars.get(position);
-        holder.binding.tvCarName.setText(car.brand + " " + car.model);
-        holder.binding.tvPrice.setText("$" + (int)car.pricePerDay + "/Day");
-        holder.binding.tvSeats.setText(car.seats + " Seats");
-        holder.binding.tvLocation.setText(car.location);
-        holder.binding.tvRating.setText(String.valueOf(car.rating));
+        Car car = carList.get(position);
+        holder.binding.tvCarName.setText(car.getBrand() + " " + car.getModel());
+        holder.binding.tvPrice.setText("PKR" + (int)car.getPriceperday() + "/Day");
+        holder.binding.tvRating.setText(String.valueOf(car.getRating()));
+        holder.binding.tvLocation.setText(car.getLocation());
 
-        if (car.images != null && !car.images.isEmpty()) {
+        if (car.getImages() != null && !car.getImages().isEmpty()) {
             Glide.with(holder.itemView.getContext())
-                    .load(car.images.get(0))
-                    .into(holder.binding.ivCarImage);
+                    .load(car.getImages().get(0))
+                    .placeholder(R.drawable.car_image)
+                    .into(holder.binding.ivCar);
+        } else {
+            holder.binding.ivCar.setImageResource(R.drawable.car_image);
         }
-
-        holder.itemView.setOnClickListener(v -> listener.onCarClick(car));
     }
 
     @Override
     public int getItemCount() {
-        return cars.size();
+        return carList.size();
+    }
+
+    public void setCars(List<Car> cars) {
+        this.carList = cars;
+        notifyDataSetChanged();
     }
 
     public static class CarViewHolder extends RecyclerView.ViewHolder {
-        ItemCarCardBinding binding;
-        public CarViewHolder(ItemCarCardBinding binding) {
+        ItemCarBinding binding;
+
+        public CarViewHolder(ItemCarBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

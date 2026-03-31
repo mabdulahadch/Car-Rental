@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="200dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="16dp"
-    app:cardBackgroundColor="@color/surface"
-    app:cardCornerRadius="24dp"
-    app:cardElevation="0dp">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="16dp"
+    android:backgroundTint="@color/white"
+    app:cardElevation="2dp"
+    app:strokeWidth="0.5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,38 +20,35 @@
             android:layout_height="120dp">
 
             <ImageView
-                android:id="@+id/iv_car_image"
+                android:id="@+id/iv_car"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerInside"
-                android:src="@android:drawable/ic_menu_gallery" />
+                android:src="@drawable/car_image" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_alignParentEnd="true"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="8dp"
-                    android:src="@android:drawable/btn_star_big_off"
-                    app:tint="@color/primary" />
-            </com.google.android.material.card.MaterialCardView>
+<!--            <ImageButton-->
+<!--                android:id="@+id/btn_favorite"-->
+<!--                android:layout_width="32dp"-->
+<!--                android:layout_height="32dp"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:background="@drawable/bg_filter_button"-->
+<!--                android:backgroundTint="@color/white"-->
+<!--                android:src="@android:drawable/btn_star_big_off"-->
+<!--                android:padding="6dp"-->
+<!--                app:tint="@color/gray_text" />-->
         </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_car_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Ferrari-FF"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/urbanist_bold"
+            android:maxLines="1"
+            android:text="Tesla Model S"
             android:textColor="@color/onBackground"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,6 +61,7 @@
                 android:id="@+id/tv_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist_regular"
                 android:text="5.0"
                 android:textColor="@color/gray_text"
                 android:textSize="12sp" />
@@ -72,7 +71,7 @@
                 android:layout_height="12dp"
                 android:layout_marginStart="4dp"
                 android:src="@android:drawable/btn_star_big_on"
-                app:tint="#FFD700" />
+                app:tint="#FACC15" />
         </LinearLayout>
 
         <LinearLayout
@@ -93,53 +92,53 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:text="Washington DC"
+                android:ellipsize="end"
+                android:fontFamily="@font/urbanist_regular"
+                android:maxLines="1"
+                android:text="Chicago, USA"
                 android:textColor="@color/gray_text"
                 android:textSize="12sp" />
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="12dp"
-            android:background="@color/divider" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:src="@android:drawable/ic_menu_myplaces"
-                    app:tint="@color/gray_text" />
-
-                <TextView
-                    android:id="@+id/tv_seats"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="4 Seats"
-                    android:textColor="@color/gray_text"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
             <TextView
                 android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:text="$200/Day"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/urbanist_bold"
+                android:text="$100/Day"
                 android:textColor="@color/onBackground"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_book"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_alignParentEnd="true"
+                android:backgroundTint="@color/primary"
+                android:fontFamily="@font/urbanist_bold"
+
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+
+                android:padding="10dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+
+                android:text="Book now"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+
+                app:cornerRadius="18dp"/>
         </RelativeLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

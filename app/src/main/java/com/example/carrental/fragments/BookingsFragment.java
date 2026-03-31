@@ -7,15 +7,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import com.example.carrental.databinding.FragmentHomeBinding;
+import com.example.carrental.databinding.FragmentBookingsBinding;
 
-public class HomeFragment extends Fragment {
-    private FragmentHomeBinding binding;
+public class BookingsFragment extends Fragment {
+    private FragmentBookingsBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentBookingsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
