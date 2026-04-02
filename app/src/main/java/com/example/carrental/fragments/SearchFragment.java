@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -87,9 +89,11 @@ public class SearchFragment extends Fragment {
     }
 
     private void fetchCars() {
+        showLoading();
         RetrofitClient.getCarApiService().getCars().enqueue(new Callback<List<Car>>() {
             @Override
             public void onResponse(Call<List<Car>> call, Response<List<Car>> response) {
+                hideLoading();
                 if (response.isSuccessful() && response.body() != null) {
                     allCars = response.body();
                     applyFilters();
@@ -100,10 +104,30 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Car>> call, Throwable t) {
+                hideLoading();
                 Log.e("SearchFragment", "Error fetching cars", t);
                 Toast.makeText(getContext(), "Error connecting to server", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void showLoading() {
+        binding.loadingView.setVisibility(View.VISIBLE);
+        
+        // Create rotation animation
+        RotateAnimation rotate = new RotateAnimation(
+                0, 360,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f
+        );
+        rotate.setDuration(1000);
+        rotate.setRepeatCount(Animation.INFINITE);
+        binding.ivLoadingLogo.startAnimation(rotate);
+    }
+
+    private void hideLoading() {
+        binding.loadingView.setVisibility(View.GONE);
+        binding.ivLoadingLogo.clearAnimation();
     }
 
     private void applyFilters() {

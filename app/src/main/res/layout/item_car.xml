@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="6dp"
     app:cardCornerRadius="16dp"
     android:backgroundTint="@color/white"
-    app:cardElevation="2dp"
+    app:strokeColor="@color/light_grey"
     app:strokeWidth="0.5dp">
 
     <LinearLayout
@@ -113,7 +113,7 @@
                 android:fontFamily="@font/urbanist_bold"
                 android:text="$100/Day"
                 android:textColor="@color/onBackground"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_book"

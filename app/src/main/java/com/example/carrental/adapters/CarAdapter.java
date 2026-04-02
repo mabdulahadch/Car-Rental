@@ -1,11 +1,13 @@
 package com.example.carrental.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.carrental.R;
+import com.example.carrental.activities.CarDetailActivity;
 import com.example.carrental.databinding.ItemCarBinding;
 import com.example.carrental.models.Car;
 import java.util.List;
@@ -41,6 +43,18 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
         } else {
             holder.binding.ivCar.setImageResource(R.drawable.car_image);
         }
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), CarDetailActivity.class);
+            intent.putExtra("CAR_ID", car.getId());
+            v.getContext().startActivity(intent);
+        });
+        
+        holder.binding.btnBook.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), CarDetailActivity.class);
+            intent.putExtra("CAR_ID", car.getId());
+            v.getContext().startActivity(intent);
+        });
     }
 
     @Override

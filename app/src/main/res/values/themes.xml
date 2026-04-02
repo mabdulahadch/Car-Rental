@@ -26,6 +26,10 @@
         <item name="cornerSize">24dp</item>
     </style>
 
+    <style name="CircleImage" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+
     <!-- Text Styles -->
     <style name="TextAppearance.Drivo.Headline" parent="TextAppearance.Material3.HeadlineLarge">
         <item name="android:fontFamily">@font/urbanist_extrabold</item>
@@ -41,8 +45,6 @@
         <item name="android:fontFamily">@font/urbanist_regular</item>
         <item name="android:textColor">@color/gray_text</item>
     </style>
-
-
 
     <style name="Widget.App.BottomNavigationView"
         parent="Widget.MaterialComponents.BottomNavigationView">

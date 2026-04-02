@@ -22,15 +22,27 @@ public class Car {
     private boolean isavailable;
     private float rating;
     private int reviewcount;
+    private Showroom showroom;
 
     // Getters
+    public String getId() { return id; }
     public String getBrand() { return brand; }
     public String getModel() { return model; }
+    public String getCategory() { return category; }
     public double getPriceperday() { return priceperday; }
+    public int getSeats() { return seats; }
+    public String getEnginepower() { return enginepower; }
+    public String getMaxspeed() { return maxspeed; }
+    public String getFueltype() { return fueltype; }
+    public String getColor() { return color; }
+    public String getDescription() { return description; }
     public List<String> getImages() { return images; }
+    public String getRegistration() { return registration; }
+    public List<String> getFeatures() { return features; }
+    public String getShowroomid() { return showroomid; }
     public String getLocation() { return location; }
-    public float getRating() { return rating; }
     public boolean isAvailable() { return isavailable; }
-    
-    // Setters can be added if needed
+    public float getRating() { return rating; }
+    public int getReviewcount() { return reviewcount; }
+    public Showroom getShowroom() { return showroom; }
 }
