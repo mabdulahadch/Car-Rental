@@ -28,12 +28,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements FilterBottomSheet.FilterListener {
     private FragmentSearchBinding binding;
     private CarAdapter carAdapter;
     private BrandAdapter brandAdapter;
     private List<Car> allCars = new ArrayList<>();
     private String selectedBrand = "All";
+
+    // Filter state from bottom sheet
+    private String filterCategory = "All";
+    private float filterMinPrice = 0;
+    private float filterMaxPrice = 100000;
+    private String filterColor = null;
+    private int filterSeats = -1;
+    private String filterFuelType = null;
 
     @Nullable
     @Override
@@ -49,7 +57,51 @@ public class SearchFragment extends Fragment {
         setupBrandRecyclerView();
         setupCarRecyclerView();
         setupSearchInput();
+        setupSwipeRefresh();
+        setupFilterButton();
         fetchCars();
+    }
+
+    private void setupSwipeRefresh() {
+        binding.swipeRefresh.setOnRefreshListener(() -> {
+            binding.swipeRefresh.setRefreshing(false);
+            resetFilters();
+            fetchCars();
+        });
+    }
+
+    private void resetFilters() {
+        filterCategory = "All";
+        filterMinPrice = 0;
+        filterMaxPrice = 100000;
+        filterColor = null;
+        filterSeats = -1;
+        filterFuelType = null;
+        selectedBrand = "All";
+        if (brandAdapter != null) brandAdapter.resetSelection();
+        binding.etSearchPage.setText(""); // clear search query too
+    }
+
+    private void setupFilterButton() {
+        binding.btnFilter.setOnClickListener(v -> {
+            FilterBottomSheet filterSheet = new FilterBottomSheet();
+            filterSheet.setFilterListener(this);
+            filterSheet.setInitialState(filterCategory, filterMinPrice, filterMaxPrice,
+                    filterColor, filterSeats, filterFuelType);
+            filterSheet.show(getChildFragmentManager(), "FilterBottomSheet");
+        });
+    }
+
+    @Override
+    public void onFiltersApplied(String category, float minPrice, float maxPrice,
+                                 String color, int seats, String fuelType) {
+        this.filterCategory = category;
+        this.filterMinPrice = minPrice;
+        this.filterMaxPrice = maxPrice;
+        this.filterColor = color;
+        this.filterSeats = seats;
+        this.filterFuelType = fuelType;
+        applyFilters();
     }
 
     private void setupSearchInput() {
@@ -112,7 +164,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void showLoading() {
-        binding.loadingView.setVisibility(View.VISIBLE);
+        binding.layoutLoading.loadingView.setVisibility(View.VISIBLE);
         
         // Create rotation animation
         RotateAnimation rotate = new RotateAnimation(
@@ -122,12 +174,12 @@ public class SearchFragment extends Fragment {
         );
         rotate.setDuration(1000);
         rotate.setRepeatCount(Animation.INFINITE);
-        binding.ivLoadingLogo.startAnimation(rotate);
+        binding.layoutLoading.ivLoadingLogo.startAnimation(rotate);
     }
 
     private void hideLoading() {
-        binding.loadingView.setVisibility(View.GONE);
-        binding.ivLoadingLogo.clearAnimation();
+        binding.layoutLoading.loadingView.setVisibility(View.GONE);
+        binding.layoutLoading.ivLoadingLogo.clearAnimation();
     }
 
     private void applyFilters() {
@@ -135,12 +187,35 @@ public class SearchFragment extends Fragment {
         List<Car> filteredList = new ArrayList<>();
 
         for (Car car : allCars) {
+            // Brand filter (from horizontal brand chips)
             boolean matchesBrand = selectedBrand.equalsIgnoreCase("All") || car.getBrand().equalsIgnoreCase(selectedBrand);
+
+            // Search query filter
             boolean matchesQuery = query.isEmpty() || 
                                  car.getBrand().toLowerCase().contains(query) || 
                                  car.getModel().toLowerCase().contains(query);
 
-            if (matchesBrand && matchesQuery) {
+            // Category filter (from bottom sheet)
+            boolean matchesCategory = filterCategory.equals("All") ||
+                    (filterCategory.equals("SUV") && car.getCategory() != null && car.getCategory().equalsIgnoreCase("SUV")) ||
+                    (filterCategory.equals("Sedan") && (car.getCategory() == null || car.getCategory().equalsIgnoreCase("Sedan"))) ||
+                    (filterCategory.equals("Hatchback") && (car.getCategory() == null || car.getCategory().equalsIgnoreCase("Hatchback")));
+
+            // Price range filter
+            boolean matchesPrice = car.getPriceperday() >= filterMinPrice && car.getPriceperday() <= filterMaxPrice;
+
+            // Color filter
+            boolean matchesColor = filterColor == null || 
+                    (car.getColor() != null && car.getColor().equalsIgnoreCase(filterColor));
+
+            // Seats filter
+            boolean matchesSeats = filterSeats == -1 || car.getSeats() == filterSeats;
+
+            // Fuel type filter
+            boolean matchesFuel = filterFuelType == null || 
+                    (car.getFueltype() != null && car.getFueltype().equalsIgnoreCase(filterFuelType));
+
+            if (matchesBrand && matchesQuery && matchesCategory && matchesPrice && matchesColor && matchesSeats && matchesFuel) {
                 filteredList.add(car);
             }
         }

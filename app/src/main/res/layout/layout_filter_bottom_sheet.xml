@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottom_sheet"
+    android:orientation="vertical"
+    android:paddingBottom="16dp">
+
+    <!-- Handle Bar -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_handle_bar" />
+
+    <!-- Header -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="12dp">
+
+        <ImageButton
+            android:id="@+id/btn_close_filter"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/close"
+            android:padding="25dp"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            app:tint="@color/onBackground" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/urbanist_bold"
+            android:text="Filters"
+            android:textColor="@color/onBackground"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp">
+
+            <!-- Type of Cars -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/urbanist_bold"
+                android:text="Category"
+                android:textColor="@color/onBackground"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/ll_car_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/chip_all_cars"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_chip_selected"
+                    android:fontFamily="@font/urbanist_regular"
+                    android:gravity="center"
+                    android:paddingHorizontal="20dp"
+                    android:text="All"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/chip_suv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:fontFamily="@font/urbanist_regular"
+                    android:gravity="center"
+                    android:paddingHorizontal="20dp"
+                    android:text="SUV"
+                    android:textColor="@color/onBackground"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/chip_sedan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:fontFamily="@font/urbanist_regular"
+                    android:gravity="center"
+                    android:paddingHorizontal="20dp"
+                    android:text="Sedan"
+                    android:textColor="@color/onBackground"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/chip_hatchback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:fontFamily="@font/urbanist_regular"
+                    android:gravity="center"
+                    android:paddingHorizontal="20dp"
+                    android:text="Hatchback"
+                    android:textColor="@color/onBackground"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/divider" />
+
+            <!-- Price Range -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/urbanist_bold"
+                android:text="Price range"
+                android:textColor="@color/onBackground"
+                android:textSize="16sp" />
+
+            <!-- Histogram placeholder -->
+<!--            <LinearLayout-->
+<!--                android:id="@+id/ll_histogram"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="80dp"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:gravity="bottom"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:clipChildren="false" />-->
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/range_slider_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:valueFrom="0"
+                android:valueTo="100000"
+                app:thumbColor="@color/onBackground"
+                app:trackColorActive="@color/onBackground"
+                app:trackColorInactive="@color/divider"
+                app:thumbRadius="12dp"
+                app:labelBehavior="gone" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/urbanist_regular"
+                        android:text="Minimum"
+                        android:textColor="@color/gray_text"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_min_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="34dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/bg_price_chip"
+                        android:fontFamily="@font/urbanist_bold"
+                        android:gravity="center"
+                        android:paddingHorizontal="16dp"
+                        android:text="PKR 0"
+                        android:textColor="@color/onBackground"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="vertical"
+                    android:gravity="end">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/urbanist_regular"
+                        android:text="Maximum"
+                        android:textColor="@color/gray_text"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_max_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="34dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/bg_price_chip"
+                        android:fontFamily="@font/urbanist_bold"
+                        android:gravity="center"
+                        android:paddingHorizontal="16dp"
+                        android:text="PKR 100,000+"
+                        android:textColor="@color/onBackground"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/divider" />
+
+            <!-- Colors -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/urbanist_bold"
+                android:text="Colors"
+                android:textColor="@color/onBackground"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/ll_colors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal" />
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/divider" />
+
+            <!-- Sitting Capacity -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/urbanist_bold"
+                android:text="Sitting Capacity"
+                android:textColor="@color/onBackground"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/ll_seats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/chip_seat_2"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:fontFamily="@font/urbanist_regular"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="@color/onBackground"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/chip_seat_4"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:fontFamily="@font/urbanist_regular"
+                    android:gravity="center"
+                    android:text="4"
+                    android:textColor="@color/onBackground"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/chip_seat_5"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:fontFamily="@font/urbanist_regular"
+                    android:gravity="center"
+                    android:text="5"
+                    android:textColor="@color/onBackground"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/chip_seat_7"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:fontFamily="@font/urbanist_regular"
+                    android:gravity="center"
+                    android:text="7"
+                    android:textColor="@color/onBackground"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/chip_seat_8"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:fontFamily="@font/urbanist_regular"
+                    android:gravity="center"
+                    android:text="8"
+                    android:textColor="@color/onBackground"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/divider" />
+
+            <!-- Fuel Type -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/urbanist_bold"
+                android:text="Fuel Type"
+                android:textColor="@color/onBackground"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/ll_fuel_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/chip_fuel_electric"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:fontFamily="@font/urbanist_regular"
+                    android:gravity="center"
+                    android:paddingHorizontal="18dp"
+                    android:text="Electric"
+                    android:textColor="@color/onBackground"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/chip_fuel_petrol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:fontFamily="@font/urbanist_regular"
+                    android:gravity="center"
+                    android:paddingHorizontal="18dp"
+                    android:text="Petrol"
+                    android:textColor="@color/onBackground"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/chip_fuel_diesel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:fontFamily="@font/urbanist_regular"
+                    android:gravity="center"
+                    android:paddingHorizontal="18dp"
+                    android:text="Diesel"
+                    android:textColor="@color/onBackground"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/chip_fuel_hybrid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:fontFamily="@font/urbanist_regular"
+                    android:gravity="center"
+                    android:paddingHorizontal="18dp"
+                    android:text="Hybrid"
+                    android:textColor="@color/onBackground"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <!-- Spacer -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="24dp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Divider above footer -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider" />
+
+    <!-- Footer -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="16dp">
+
+        <TextView
+            android:id="@+id/btn_clear_all"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/urbanist_bold"
+            android:text="Clear All"
+            android:textColor="@color/onBackground"
+            android:textSize="15sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_show_cars"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/primary"
+            android:fontFamily="@font/urbanist_bold"
+            android:text="Show Cars"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:cornerRadius="26dp" />
+    </LinearLayout>
+</LinearLayout>

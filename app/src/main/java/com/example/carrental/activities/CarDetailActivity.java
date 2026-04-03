@@ -41,9 +41,11 @@ public class CarDetailActivity extends AppCompatActivity {
     }
 
     private void fetchCarDetails() {
+        showLoading();
         RetrofitClient.getCarApiService().getCarDetail(carId).enqueue(new Callback<Car>() {
             @Override
             public void onResponse(Call<Car> call, Response<Car> response) {
+                hideLoading();
                 if (response.isSuccessful() && response.body() != null) {
                     displayCarDetails(response.body());
                 } else {
@@ -53,10 +55,29 @@ public class CarDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Car> call, Throwable t) {
+                hideLoading();
                 Log.e("CarDetailActivity", "Error: " + t.getMessage());
                 Toast.makeText(CarDetailActivity.this, "Network error", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void showLoading() {
+        binding.layoutLoading.loadingView.setVisibility(android.view.View.VISIBLE);
+        
+        android.view.animation.RotateAnimation rotate = new android.view.animation.RotateAnimation(
+                0, 360,
+                android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f,
+                android.view.animation.Animation.RELATIVE_TO_SELF, 0.5f
+        );
+        rotate.setDuration(1000);
+        rotate.setRepeatCount(android.view.animation.Animation.INFINITE);
+        binding.layoutLoading.ivLoadingLogo.startAnimation(rotate);
+    }
+
+    private void hideLoading() {
+        binding.layoutLoading.loadingView.setVisibility(android.view.View.GONE);
+        binding.layoutLoading.ivLoadingLogo.clearAnimation();
     }
 
     private void displayCarDetails(Car car) {

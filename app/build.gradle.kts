@@ -36,7 +36,6 @@ android {
 
 dependencies {
     implementation(libs.appcompat)
-    implementation("com.google.android.material:material:1.9.0")
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
@@ -44,8 +43,8 @@ dependencies {
     implementation(libs.retrofit.gson)
     implementation(libs.glide)
     implementation(libs.okhttp)
+    implementation(libs.swiperefreshlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-
 }

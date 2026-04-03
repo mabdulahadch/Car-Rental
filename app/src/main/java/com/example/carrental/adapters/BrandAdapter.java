@@ -67,6 +67,13 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.BrandViewHol
         return brandList.size();
     }
 
+    public void resetSelection() {
+        for (int i = 0; i < brandList.size(); i++) {
+            brandList.get(i).setSelected(i == 0);
+        }
+        notifyDataSetChanged();
+    }
+
     public static class BrandViewHolder extends RecyclerView.ViewHolder {
         ItemBrandBinding binding;
         public BrandViewHolder(ItemBrandBinding binding) {
