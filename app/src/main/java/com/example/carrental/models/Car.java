@@ -31,9 +31,10 @@ public class Car {
     public String getCategory() { return category; }
     public double getPriceperday() { return priceperday; }
     public int getSeats() { return seats; }
-    public String getEnginepower() { return enginepower; }
-    public String getMaxspeed() { return maxspeed; }
-    public String getFueltype() { return fueltype; }
+    public String getEnginePower() { return enginepower; }
+    public String getMaxSpeed() { return maxspeed; }
+    public String getFuelType() { return fueltype; }
+
     public String getColor() { return color; }
     public String getDescription() { return description; }
     public List<String> getImages() { return images; }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <RelativeLayout
+        android:layout_marginTop="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+        <ImageButton
+            android:id="@+id/btn_fav_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/back"
+            android:scaleType="centerInside"
+            android:padding="8dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Favorite Cars"
+            android:textSize="20sp"
+            android:fontFamily="@font/urbanist_bold"
+            android:textColor="@color/onBackground"/>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_favorite_cars"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"/>
+
+        <TextView
+            android:id="@+id/tv_no_favorites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No favorite cars yet."
+            android:layout_gravity="center"
+            android:fontFamily="@font/urbanist_regular"
+            android:textColor="@color/gray_text"
+            android:visibility="gone"/>
+
+        <!-- Loading View -->
+        <include
+            android:id="@+id/layout_loading"
+            layout="@layout/layout_loading" />
+    </FrameLayout>
+</LinearLayout>

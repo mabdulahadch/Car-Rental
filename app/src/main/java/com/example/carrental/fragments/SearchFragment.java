@@ -213,7 +213,7 @@ public class SearchFragment extends Fragment implements FilterBottomSheet.Filter
 
             // Fuel type filter
             boolean matchesFuel = filterFuelType == null || 
-                    (car.getFueltype() != null && car.getFueltype().equalsIgnoreCase(filterFuelType));
+                    (car.getFuelType() != null && car.getFuelType().equalsIgnoreCase(filterFuelType));
 
             if (matchesBrand && matchesQuery && matchesCategory && matchesPrice && matchesColor && matchesSeats && matchesFuel) {
                 filteredList.add(car);

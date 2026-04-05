@@ -19,12 +19,15 @@ public class CarDetailActivity extends AppCompatActivity {
 
     private ActivityCarDetailBinding binding;
     private String carId;
+    private com.example.carrental.utils.SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityCarDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        sessionManager = new com.example.carrental.utils.SessionManager(this);
 
         carId = getIntent().getStringExtra("CAR_ID");
         if (carId == null) {
@@ -38,6 +41,26 @@ public class CarDetailActivity extends AppCompatActivity {
 
     private void setupButtons() {
         binding.btnBack.setOnClickListener(v -> finish());
+        
+        updateFavoriteIcon();
+        binding.btnFav.setOnClickListener(v -> {
+            if (sessionManager.isFavorite(carId)) {
+                sessionManager.removeFavorite(carId);
+                Toast.makeText(this, "Removed from favorites", Toast.LENGTH_SHORT).show();
+            } else {
+                sessionManager.addFavorite(carId);
+                Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
+            }
+            updateFavoriteIcon();
+        });
+    }
+
+    private void updateFavoriteIcon() {
+        if (sessionManager.isFavorite(carId)) {
+            binding.btnFav.setColorFilter(android.graphics.Color.RED);
+        } else {
+            binding.btnFav.clearColorFilter();
+        }
     }
 
     private void fetchCarDetails() {
@@ -86,8 +109,11 @@ public class CarDetailActivity extends AppCompatActivity {
         binding.tvDetailRating.setText(String.valueOf(car.getRating()));
         binding.tvDetailPrice.setText("PKR " + (int)car.getPriceperday() + "/Day");
         binding.tvDetailSeats.setText(car.getSeats() + " Seats");
-        binding.tvDetailEngine.setText(car.getEnginepower() != null ? car.getEnginepower() : "N/A");
-        binding.tvDetailMaxSpeed.setText(car.getMaxspeed() != null ? car.getMaxspeed() : "N/A");
+        binding.tvDetailEngine.setText(car.getEnginePower() != null ? car.getEnginePower() : "N/A");
+        binding.tvDetailMaxSpeed.setText(car.getMaxSpeed() != null ? car.getMaxSpeed() : "N/A");
+        binding.tvFuelType.setText(car.getFuelType() != null ? car.getFuelType() : "N/A");
+        binding.tvColorType.setText(car.getColor() != null ? car.getColor() : "N/A");
+
 
         if (car.getShowroom() != null) {
             binding.tvOwnerName.setText(car.getShowroom().getName());
@@ -106,5 +132,22 @@ public class CarDetailActivity extends AppCompatActivity {
             binding.vpCarImages.setAdapter(adapter);
             new TabLayoutMediator(binding.tabLayoutDots, binding.vpCarImages, (tab, position) -> {}).attach();
         }
+
+        binding.btnLocation.setOnClickListener(v -> {
+            if (car.getLocation() != null && !car.getLocation().isEmpty()) {
+                android.net.Uri gmmIntentUri = android.net.Uri.parse("geo:0,0?q=" + android.net.Uri.encode(car.getLocation()));
+                android.content.Intent mapIntent = new android.content.Intent(android.content.Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(mapIntent);
+                } else {
+                    // Fallback to generic geo intent
+                    android.content.Intent genericIntent = new android.content.Intent(android.content.Intent.ACTION_VIEW, gmmIntentUri);
+                    startActivity(genericIntent);
+                }
+            } else {
+                Toast.makeText(CarDetailActivity.this, "Location not available", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
