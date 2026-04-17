@@ -16,6 +16,9 @@ public interface CarApiService {
     @GET("cars/{car_id}")
     Call<Car> getCarDetail(@Path("car_id") String carId);
 
+    @GET("cars/showroom/{showroom_id}")
+    Call<List<Car>> getShowroomCars(@Path("showroom_id") String showroomId);
+
     @POST("auth/login")
     Call<com.example.carrental.models.User> login(@Body com.example.carrental.models.User user);
 
@@ -24,6 +27,12 @@ public interface CarApiService {
 
     @POST("showrooms/")
     Call<com.example.carrental.models.Showroom> createShowroom(@Body com.example.carrental.models.ShowroomCreateRequest request);
+
+    @POST("showrooms/login")
+    Call<com.example.carrental.models.Showroom> loginShowroom(@Body com.example.carrental.models.ShowroomLoginRequest request);
+
+    @POST("cars/")
+    Call<com.example.carrental.models.Car> createCar(@Body com.example.carrental.models.CarCreateRequest request);
 
     @POST("favorites/")
     Call<java.util.Map<String, String>> addFavorite(@Body java.util.Map<String, String> request);

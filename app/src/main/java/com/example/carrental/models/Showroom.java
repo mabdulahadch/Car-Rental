@@ -10,6 +10,8 @@ public class Showroom {
     private List<String> image; // This matches the JSON array ["url"]
     private float rating;
 
+    public String getId() { return id; }
+
     public String getName() { return name; }
     
     public String getImageUrl() { 

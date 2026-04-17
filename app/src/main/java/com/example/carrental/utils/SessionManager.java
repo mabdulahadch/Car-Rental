@@ -19,6 +19,9 @@ public class SessionManager {
     private static final String KEY_IS_FIRST_TIME = "IsFirstTimeLaunch";
     private static final String KEY_FAVORITES = "FavoriteCars";
     private static final String KEY_IS_PARTNER = "IsPartner";
+    private static final String KEY_SHOWROOM_ID = "ShowroomId";
+    private static final String KEY_PARTNER_LOGIN_TIME = "PartnerLoginTime";
+    private static final long SEVEN_DAYS_MS = 7L * 24 * 60 * 60 * 1000; // 7 Days in MS
 
     public SessionManager(Context context) {
         this.context = context;
@@ -61,6 +64,8 @@ public class SessionManager {
         editor.remove(KEY_NAME);
         editor.remove(KEY_EMAIL);
         editor.remove(KEY_IS_PARTNER);
+        editor.remove(KEY_SHOWROOM_ID);
+        editor.remove(KEY_PARTNER_LOGIN_TIME);
         editor.commit();
     }
 
@@ -70,7 +75,32 @@ public class SessionManager {
     }
 
     public boolean isPartner() {
-        return pref.getBoolean(KEY_IS_PARTNER, false);
+        boolean isPartnerFlag = pref.getBoolean(KEY_IS_PARTNER, false);
+        if (!isPartnerFlag) return false;
+
+        long loginTime = pref.getLong(KEY_PARTNER_LOGIN_TIME, 0);
+        long currentTime = System.currentTimeMillis();
+
+        if (currentTime - loginTime > SEVEN_DAYS_MS) {
+            // Session expired
+            editor.remove(KEY_IS_PARTNER);
+            editor.remove(KEY_SHOWROOM_ID);
+            editor.remove(KEY_PARTNER_LOGIN_TIME);
+            editor.commit();
+            return false;
+        }
+
+        return true;
+    }
+    
+    public void setShowroomId(String id) {
+        editor.putString(KEY_SHOWROOM_ID, id);
+        editor.putLong(KEY_PARTNER_LOGIN_TIME, System.currentTimeMillis());
+        editor.commit();
+    }
+    
+    public String getShowroomId() {
+        return pref.getString(KEY_SHOWROOM_ID, null);
     }
 
     public void addFavorite(String carId) {

@@ -18,17 +18,22 @@ import com.example.carrental.R;
 import com.example.carrental.activities.BecomePartnerActivity;
 import com.example.carrental.activities.FavoriteCarsActivity;
 import com.example.carrental.activities.LoginActivity;
+import com.example.carrental.partner.PartnerDashboardActivity;
+import com.example.carrental.partner.PartnerLoginActivity;
 import com.example.carrental.utils.SessionManager;
 
 public class ProfileFragment extends Fragment {
     
     private SessionManager sessionManager;
 
+    private View cardBecomePartner, cardPartnerLogin, cardPartnerDashboard;
+    private TextView tvName, tvEmail, tvAuthAction;
+    private ImageView ivAuthIcon;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
     @Override
@@ -37,28 +42,21 @@ public class ProfileFragment extends Fragment {
         
         sessionManager = new SessionManager(requireContext());
 
-        TextView tvName = view.findViewById(R.id.tv_profile_name);
-        TextView tvEmail = view.findViewById(R.id.tv_profile_email);
-        TextView tvAuthAction = view.findViewById(R.id.tv_auth_action);
-        ImageView ivAuthIcon = view.findViewById(R.id.iv_auth_icon);
+        tvName = view.findViewById(R.id.tv_profile_name);
+        tvEmail = view.findViewById(R.id.tv_profile_email);
+        tvAuthAction = view.findViewById(R.id.tv_auth_action);
+        ivAuthIcon = view.findViewById(R.id.iv_auth_icon);
+        
         LinearLayout rowAuthAction = view.findViewById(R.id.row_auth_action);
         LinearLayout rowFavCars = view.findViewById(R.id.row_fav_cars);
+        
+        cardBecomePartner = view.findViewById(R.id.card_become_partner);
+        cardPartnerLogin = view.findViewById(R.id.card_partner_login);
+        cardPartnerDashboard = view.findViewById(R.id.card_partner_dashboard);
+
         View btnBecomePartner = view.findViewById(R.id.btn_become_partner);
-
-        if (sessionManager.isLoggedIn()) {
-            tvName.setText(sessionManager.getUserName() != null ? sessionManager.getUserName() : "User");
-            tvEmail.setText(sessionManager.getUserEmail() != null ? sessionManager.getUserEmail() : "user@app.com");
-            tvAuthAction.setText("Log out");
-        } else {
-            tvName.setText("Guest User");
-            tvEmail.setText("Please login or become a partner");
-            tvAuthAction.setText("Log In");
-//            ivAuthIcon.setImageResource(android.R.drawable.ic_menu_login);
-        }
-
-        if (sessionManager.isPartner()) {
-            btnBecomePartner.setVisibility(View.GONE);
-        }
+        View btnPartnerLogin = view.findViewById(R.id.btn_partner_login);
+        View btnPartnerDashboard = view.findViewById(R.id.btn_partner_dashboard);
 
         rowAuthAction.setOnClickListener(v -> {
             if (sessionManager.isLoggedIn()) {
@@ -78,5 +76,41 @@ public class ProfileFragment extends Fragment {
         btnBecomePartner.setOnClickListener(v -> {
             startActivity(new Intent(requireContext(), BecomePartnerActivity.class));
         });
+
+        btnPartnerLogin.setOnClickListener(v -> {
+            startActivity(new Intent(requireContext(), PartnerLoginActivity.class));
+        });
+
+        btnPartnerDashboard.setOnClickListener(v -> {
+            startActivity(new Intent(requireContext(), PartnerDashboardActivity.class));
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
+    private void updateUI() {
+        if (sessionManager.isLoggedIn()) {
+            tvName.setText(sessionManager.getUserName() != null ? sessionManager.getUserName() : "User");
+            tvEmail.setText(sessionManager.getUserEmail() != null ? sessionManager.getUserEmail() : "user@app.com");
+            tvAuthAction.setText("Log out");
+        } else {
+            tvName.setText("Guest User");
+            tvEmail.setText("Please login or become a partner");
+            tvAuthAction.setText("Log In");
+        }
+
+        if (sessionManager.isPartner()) {
+            cardBecomePartner.setVisibility(View.GONE);
+            cardPartnerLogin.setVisibility(View.GONE);
+            cardPartnerDashboard.setVisibility(View.VISIBLE);
+        } else {
+            cardBecomePartner.setVisibility(View.VISIBLE);
+            cardPartnerLogin.setVisibility(View.VISIBLE);
+            cardPartnerDashboard.setVisibility(View.GONE);
+        }
     }
 }

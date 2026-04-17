@@ -34,7 +34,10 @@
 
         <activity android:name=".activities.LoginActivity" android:exported="false"/>
         <activity android:name=".activities.BecomePartnerActivity" android:exported="false"/>
+        <activity android:name=".partner.PartnerLoginActivity" android:exported="false"/>
         <activity android:name=".activities.FavoriteCarsActivity" android:exported="false"/>
+        <activity android:name=".partner.PartnerDashboardActivity" android:exported="false"/>
+        <activity android:name=".partner.AddNewCarActivity" android:exported="false"/>
 
     </application>
 
