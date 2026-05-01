@@ -58,6 +58,10 @@ public class SessionManager {
         return pref.getString(KEY_EMAIL, null);
     }
 
+    public String getUserId() {
+        return pref.getString(KEY_USER_ID, null);
+    }
+
     public void logoutUser() {
         editor.putBoolean(IS_LOGIN, false);
         editor.remove(KEY_USER_ID);

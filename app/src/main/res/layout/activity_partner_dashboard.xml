@@ -82,6 +82,7 @@
                             android:layout_marginBottom="8dp"/>
 
                         <TextView
+                            android:id="@+id/tv_total_cars"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
@@ -123,6 +124,7 @@
                             android:layout_marginBottom="8dp"/>
 
                         <TextView
+                            android:id="@+id/tv_total_bookings"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"

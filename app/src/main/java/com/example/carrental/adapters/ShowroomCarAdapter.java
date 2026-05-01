@@ -20,10 +20,19 @@ public class ShowroomCarAdapter extends RecyclerView.Adapter<ShowroomCarAdapter.
 
     private final Context context;
     private final List<Car> carList;
+    private OnCarActionListener actionListener;
+
+    public interface OnCarActionListener {
+        void onDeleteCar(Car car, int position);
+    }
 
     public ShowroomCarAdapter(Context context, List<Car> carList) {
         this.context = context;
         this.carList = carList;
+    }
+
+    public void setOnCarActionListener(OnCarActionListener listener) {
+        this.actionListener = listener;
     }
 
     @NonNull
@@ -39,7 +48,7 @@ public class ShowroomCarAdapter extends RecyclerView.Adapter<ShowroomCarAdapter.
         
         holder.tvCarName.setText(car.getBrand() + " " + car.getModel());
         holder.tvLocation.setText(car.getLocation());
-        holder.tvPrice.setText("$" + car.getPriceperday() + "/Day");
+        holder.tvPrice.setText("PKR " + (int) car.getPriceperday() + "/Day");
 
         if (car.getImages() != null && !car.getImages().isEmpty() && !car.getImages().get(0).isEmpty()) {
             Glide.with(context)
@@ -50,6 +59,15 @@ public class ShowroomCarAdapter extends RecyclerView.Adapter<ShowroomCarAdapter.
         } else {
             holder.ivCar.setImageResource(R.drawable.testing);
         }
+
+        // Delete button
+        if (holder.btnDelete != null) {
+            holder.btnDelete.setOnClickListener(v -> {
+                if (actionListener != null) {
+                    actionListener.onDeleteCar(car, position);
+                }
+            });
+        }
     }
 
     @Override
@@ -57,11 +75,19 @@ public class ShowroomCarAdapter extends RecyclerView.Adapter<ShowroomCarAdapter.
         return carList.size();
     }
 
+    public void removeCar(int position) {
+        if (position >= 0 && position < carList.size()) {
+            carList.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView ivCar;
         TextView tvCarName;
         TextView tvLocation;
         TextView tvPrice;
+        View btnDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,6 +95,7 @@ public class ShowroomCarAdapter extends RecyclerView.Adapter<ShowroomCarAdapter.
             tvCarName = itemView.findViewById(R.id.tv_car_name);
             tvLocation = itemView.findViewById(R.id.tv_location);
             tvPrice = itemView.findViewById(R.id.tv_price);
+            btnDelete = itemView.findViewById(R.id.btn_delete_car);
         }
     }
 }

@@ -7,6 +7,7 @@ public class Brand {
 
     public Brand(String name, int iconRes, boolean isSelected) {
         this.name = name;
+        this.iconRes = iconRes;
         this.isSelected = isSelected;
     }
 

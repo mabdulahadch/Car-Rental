@@ -37,7 +37,8 @@
                 android:id="@+id/tv_car_name"
                 android:layout_width="match_parent"
                 android:clipToOutline="true"
-                android:layout_height="wrap_content" android:fontFamily="@font/urbanist_bold"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist_bold"
                 android:text="Tesla Model S"
                 android:textColor="@color/onBackground"
                 android:textSize="14sp"
@@ -62,11 +63,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/urbanist_regular"
-                android:text="$100/Day"
+                android:text="PKR 100/Day"
                 android:textColor="@color/onBackground"
                 android:textSize="13sp"/>
 
         </LinearLayout>
+
+        <!-- Delete Button -->
+        <ImageView
+            android:id="@+id/btn_delete_car"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:padding="8dp"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/close"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Delete car" />
 
     </LinearLayout>
 

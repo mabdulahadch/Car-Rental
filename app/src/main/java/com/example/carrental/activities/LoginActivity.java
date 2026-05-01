@@ -33,10 +33,7 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin.setOnClickListener(v -> loginUser());
         findViewById(R.id.tv_register).setOnClickListener(v -> {
-            Toast.makeText(this, "Redirect to Register...", Toast.LENGTH_SHORT).show();
-            // Just simulate success
-            sessionManager.createLoginSession("test-id", "Guest", etEmail.getText().toString());
-            finish();
+            startActivity(new android.content.Intent(this, RegisterActivity.class));
         });
     }
 
@@ -44,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = etEmail.getText().toString();
         String pass = etPassword.getText().toString();
 
-        if(email.isEmpty() || pass.isEmpty()) {
+        if (email.isEmpty() || pass.isEmpty()) {
             Toast.makeText(this, "Empty fields", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -53,8 +50,9 @@ public class LoginActivity extends AppCompatActivity {
         RetrofitClient.getCarApiService().login(userReq).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                if(response.isSuccessful() && response.body() != null) {
-                    sessionManager.createLoginSession(response.body().getId(), response.body().getName(), response.body().getEmail());
+                if (response.isSuccessful() && response.body() != null) {
+                    sessionManager.createLoginSession(response.body().getId(), response.body().getName(),
+                            response.body().getEmail());
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
