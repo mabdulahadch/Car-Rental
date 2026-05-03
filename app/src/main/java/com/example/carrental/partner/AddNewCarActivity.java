@@ -88,6 +88,11 @@ public class AddNewCarActivity extends AppCompatActivity {
         String desc = etDesc.getText().toString();
 
         String showroomId = sessionManager.getShowroomId();
+        
+        if (showroomId == null || showroomId.isEmpty()) {
+            Toast.makeText(this, "Showroom session error. Please login again.", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         CarCreateRequest request = new CarCreateRequest(
                 brand, model, category, price, seats, power, speed, fuel, "Black",
@@ -102,13 +107,21 @@ public class AddNewCarActivity extends AppCompatActivity {
                     Toast.makeText(AddNewCarActivity.this, "Car saved successfully", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Toast.makeText(AddNewCarActivity.this, "Failed to save car", Toast.LENGTH_SHORT).show();
+                    String errorMsg = "Failed to save car";
+                    try {
+                        if (response.errorBody() != null) {
+                            errorMsg += ": " + response.errorBody().string();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    Toast.makeText(AddNewCarActivity.this, errorMsg, Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Car> call, Throwable t) {
-                Toast.makeText(AddNewCarActivity.this, "Network error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddNewCarActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

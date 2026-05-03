@@ -1,5 +1,6 @@
 package com.example.carrental.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.carrental.activities.LoginActivity;
 import com.example.carrental.adapters.BookingAdapter;
 import com.example.carrental.api.RetrofitClient;
 import com.example.carrental.databinding.FragmentBookingsBinding;
@@ -67,6 +69,17 @@ public class BookingsFragment extends Fragment implements BookingAdapter.OnCance
     }
 
     private void loadBookings() {
+        if (!sessionManager.isLoggedIn()) {
+            showEmptyState();
+            // Update empty state text to prompt login
+            if (binding != null && binding.llNoBookings != null) {
+                binding.llNoBookings.setOnClickListener(v -> {
+                    startActivity(new Intent(requireContext(), LoginActivity.class));
+                });
+            }
+            return;
+        }
+
         String userId = sessionManager.getUserId();
         if (userId == null || userId.isEmpty()) {
             showEmptyState();
@@ -99,7 +112,9 @@ public class BookingsFragment extends Fragment implements BookingAdapter.OnCance
                 hideLoading();
                 Log.e("BookingsFragment", "Error loading bookings", t);
                 showEmptyState();
-                Toast.makeText(getContext(), "Failed to load bookings", Toast.LENGTH_SHORT).show();
+                if (getContext() != null) {
+                    Toast.makeText(getContext(), "Failed to load bookings", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -114,31 +129,40 @@ public class BookingsFragment extends Fragment implements BookingAdapter.OnCance
             @Override
             public void onResponse(Call<Booking> call, Response<Booking> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getContext(), "Booking cancelled", Toast.LENGTH_SHORT).show();
+                    if (getContext() != null) {
+                        Toast.makeText(getContext(), "Booking cancelled", Toast.LENGTH_SHORT).show();
+                    }
                     loadBookings(); // Refresh the list
                 } else {
-                    Toast.makeText(getContext(), "Failed to cancel booking", Toast.LENGTH_SHORT).show();
+                    if (getContext() != null) {
+                        Toast.makeText(getContext(), "Failed to cancel booking", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<Booking> call, Throwable t) {
-                Toast.makeText(getContext(), "Network error", Toast.LENGTH_SHORT).show();
+                if (getContext() != null) {
+                    Toast.makeText(getContext(), "Network error", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
     private void showEmptyState() {
+        if (binding == null) return;
         binding.rvBookings.setVisibility(View.GONE);
         binding.llNoBookings.setVisibility(View.VISIBLE);
     }
 
     private void hideEmptyState() {
+        if (binding == null) return;
         binding.rvBookings.setVisibility(View.VISIBLE);
         binding.llNoBookings.setVisibility(View.GONE);
     }
 
     private void showLoading() {
+        if (binding == null) return;
         binding.layoutLoading.loadingView.setVisibility(View.VISIBLE);
         RotateAnimation rotate = new RotateAnimation(
                 0, 360,
@@ -151,6 +175,7 @@ public class BookingsFragment extends Fragment implements BookingAdapter.OnCance
     }
 
     private void hideLoading() {
+        if (binding == null) return;
         binding.layoutLoading.loadingView.setVisibility(View.GONE);
         binding.layoutLoading.ivLoadingLogo.clearAnimation();
     }

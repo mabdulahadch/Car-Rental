@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
-<!--    app:tabBackground="@drawable/nav_item_color"-->
+    android:background="@color/background">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -29,11 +28,12 @@
                     android:id="@+id/btn_back"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:backgroundTint="@color/white"
+                    android:backgroundTint="@color/card_background"
                     android:scaleType="centerInside"
                     android:adjustViewBounds="true"
                     android:padding="8dp"
-                    android:src="@drawable/back"/>
+                    android:src="@drawable/back"
+                    app:tint="@color/onBackground"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -197,11 +197,12 @@
                             android:id="@+id/btn_location"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:backgroundTint="@color/white"
+                            android:backgroundTint="@color/card_background"
                             android:scaleType="centerInside"
                             android:adjustViewBounds="true"
                             android:padding="9dp"
-                            android:src="@drawable/compass"/>
+                            android:src="@drawable/compass"
+                            app:tint="@color/onBackground"/>
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -455,7 +456,7 @@
         app:strokeColor="@color/divider"
         app:strokeWidth="1dp"
         app:cardCornerRadius="0dp"
-        android:backgroundTint="@color/white">
+        android:backgroundTint="@color/card_background">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -496,7 +497,7 @@
                 android:fontFamily="@font/urbanist_bold"
                 android:text="Book Now"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/onPrimary"
                 app:cornerRadius="28dp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

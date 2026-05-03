@@ -66,8 +66,8 @@ public interface CarApiService {
     @GET("bookings/user/{user_id}")
     Call<List<Booking>> getUserBookings(@Path("user_id") String userId);
 
-    @GET("bookings/car/{car_id}")
-    Call<List<Booking>> getCarBookings(@Path("car_id") String carId);
+    @GET("bookings/showroom/{showroom_id}")
+    Call<List<Booking>> getShowroomBookings(@Path("showroom_id") String showroomId);
 
     @GET("bookings/{booking_id}")
     Call<Booking> getBookingDetail(@Path("booking_id") String bookingId);

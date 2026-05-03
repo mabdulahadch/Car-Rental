@@ -197,9 +197,7 @@ public class SearchFragment extends Fragment implements FilterBottomSheet.Filter
 
             // Category filter (from bottom sheet)
             boolean matchesCategory = filterCategory.equals("All") ||
-                    (filterCategory.equals("SUV") && car.getCategory() != null && car.getCategory().equalsIgnoreCase("SUV")) ||
-                    (filterCategory.equals("Sedan") && (car.getCategory() == null || car.getCategory().equalsIgnoreCase("Sedan"))) ||
-                    (filterCategory.equals("Hatchback") && (car.getCategory() == null || car.getCategory().equalsIgnoreCase("Hatchback")));
+                    (car.getCategory() != null && car.getCategory().equalsIgnoreCase(filterCategory));
 
             // Price range filter
             boolean matchesPrice = car.getPriceperday() >= filterMinPrice && car.getPriceperday() <= filterMaxPrice;

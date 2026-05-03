@@ -13,6 +13,11 @@
     <color name="white">#FFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
 
+    <!-- Card/surface colors for light mode -->
+    <color name="card_background">#FFFFFF</color>
+    <color name="input_text">#1A1C1E</color>
+    <color name="input_hint">#6B7280</color>
+
     <!-- Dark Mode Colors -->
     <color name="primary_dark">#FFFFFF</color>
     <color name="onPrimary_dark">#1A1C1E</color>

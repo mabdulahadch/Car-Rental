@@ -63,7 +63,7 @@ public class ProfileFragment extends Fragment {
                 sessionManager.logoutUser();
                 Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show();
                 // Refresh fragment
-                getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+                getParentFragmentManager().beginTransaction().detach(this).attach(this).commit();
             } else {
                 startActivity(new Intent(requireContext(), LoginActivity.class));
             }

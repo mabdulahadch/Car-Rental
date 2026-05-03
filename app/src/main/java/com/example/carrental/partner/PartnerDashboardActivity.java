@@ -30,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PartnerDashboardActivity extends AppCompatActivity implements ShowroomCarAdapter.OnCarActionListener {
+public class PartnerDashboardActivity extends AppCompatActivity implements ShowroomCarAdapter.OnCarActionListener, BookingAdapter.OnCancelClickListener {
 
     private RecyclerView rvShowroomCars, rvBookings;
     private LinearLayout llEmptyState;
@@ -55,6 +55,17 @@ public class PartnerDashboardActivity extends AppCompatActivity implements Showr
         llEmptyState = findViewById(R.id.ll_empty_state);
         tvTotalCars = findViewById(R.id.tv_total_cars);
         tvTotalBookings = findViewById(R.id.tv_total_bookings);
+        tvBookingsHeader = findViewById(R.id.tv_bookings_header);
+        rvBookings = findViewById(R.id.rv_partner_bookings);
+
+        // Setup bookings RecyclerView
+        bookingAdapter = new BookingAdapter(bookingList, this);
+        bookingAdapter.setPartnerView(true);
+        if (rvBookings != null) {
+            rvBookings.setLayoutManager(new LinearLayoutManager(this));
+            rvBookings.setNestedScrollingEnabled(false);
+            rvBookings.setAdapter(bookingAdapter);
+        }
 
         fabAddCar.setOnClickListener(v -> {
             startActivity(new Intent(PartnerDashboardActivity.this, AddNewCarActivity.class));
@@ -86,12 +97,16 @@ public class PartnerDashboardActivity extends AppCompatActivity implements Showr
                     if (carList.isEmpty()) {
                         rvShowroomCars.setVisibility(View.GONE);
                         llEmptyState.setVisibility(View.VISIBLE);
+                        // Hide bookings section when no cars
+                        if (tvBookingsHeader != null) tvBookingsHeader.setVisibility(View.GONE);
+                        if (rvBookings != null) rvBookings.setVisibility(View.GONE);
                     } else {
                         llEmptyState.setVisibility(View.GONE);
                         rvShowroomCars.setVisibility(View.VISIBLE);
 
                         carAdapter = new ShowroomCarAdapter(PartnerDashboardActivity.this, carList);
                         carAdapter.setOnCarActionListener(PartnerDashboardActivity.this);
+                        rvShowroomCars.setLayoutManager(new LinearLayoutManager(PartnerDashboardActivity.this));
                         rvShowroomCars.setAdapter(carAdapter);
 
                         // Load bookings for all cars
@@ -108,38 +123,79 @@ public class PartnerDashboardActivity extends AppCompatActivity implements Showr
     }
 
     private void loadAllBookings() {
-        // Load bookings for each car the partner owns
-        bookingList.clear();
-        int[] pending = {carList.size()};
+        String showroomId = sessionManager.getShowroomId();
+        if (showroomId == null) return;
 
-        for (Car car : carList) {
-            RetrofitClient.getCarApiService().getCarBookings(car.getId()).enqueue(new Callback<List<Booking>>() {
-                @Override
-                public void onResponse(Call<List<Booking>> call, Response<List<Booking>> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        bookingList.addAll(response.body());
-                    }
-                    pending[0]--;
-                    if (pending[0] <= 0) {
-                        updateBookingStats();
-                    }
+        RetrofitClient.getCarApiService().getShowroomBookings(showroomId).enqueue(new Callback<List<Booking>>() {
+            @Override
+            public void onResponse(Call<List<Booking>> call, Response<List<Booking>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    bookingList = response.body();
+                    updateBookingUI();
                 }
+            }
 
-                @Override
-                public void onFailure(Call<List<Booking>> call, Throwable t) {
-                    pending[0]--;
-                    if (pending[0] <= 0) {
-                        updateBookingStats();
-                    }
-                }
-            });
-        }
+            @Override
+            public void onFailure(Call<List<Booking>> call, Throwable t) {
+                Toast.makeText(PartnerDashboardActivity.this, "Failed to load bookings", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    private void updateBookingStats() {
+    private void updateBookingUI() {
         if (tvTotalBookings != null) {
             tvTotalBookings.setText(String.valueOf(bookingList.size()));
         }
+
+        if (bookingAdapter != null) {
+            bookingAdapter.setBookings(bookingList);
+        }
+
+        // Show/hide bookings section
+        if (tvBookingsHeader != null) {
+            tvBookingsHeader.setVisibility(bookingList.isEmpty() ? View.GONE : View.VISIBLE);
+        }
+        if (rvBookings != null) {
+            rvBookings.setVisibility(bookingList.isEmpty() ? View.GONE : View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onCancelClick(Booking booking, int position) {
+        // For partner: update booking status (approve/reject)
+        new AlertDialog.Builder(this)
+                .setTitle("Manage Booking")
+                .setMessage("What would you like to do with this booking?")
+                .setPositiveButton("Approve", (dialog, which) -> {
+                    updateBookingStatus(booking, "APPROVED");
+                })
+                .setNegativeButton("Reject", (dialog, which) -> {
+                    updateBookingStatus(booking, "REJECTED");
+                })
+                .setNeutralButton("Cancel", null)
+                .show();
+    }
+
+    private void updateBookingStatus(Booking booking, String status) {
+        Map<String, String> statusMap = new HashMap<>();
+        statusMap.put("status", status);
+
+        RetrofitClient.getCarApiService().updateBookingStatus(booking.getId(), statusMap).enqueue(new Callback<Booking>() {
+            @Override
+            public void onResponse(Call<Booking> call, Response<Booking> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(PartnerDashboardActivity.this, "Booking " + status.toLowerCase(), Toast.LENGTH_SHORT).show();
+                    loadAllBookings(); // Refresh
+                } else {
+                    Toast.makeText(PartnerDashboardActivity.this, "Failed to update booking", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Booking> call, Throwable t) {
+                Toast.makeText(PartnerDashboardActivity.this, "Network error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

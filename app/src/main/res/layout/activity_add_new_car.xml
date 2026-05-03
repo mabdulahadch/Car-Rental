@@ -78,6 +78,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"
+                        android:textColor="@color/onBackground"
                         android:hint="Brand (e.g. BMW)" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,6 +98,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"
+                        android:textColor="@color/onBackground"
                         android:hint="Model Year" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -124,6 +126,7 @@
                         android:id="@+id/et_category"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/onBackground"
                         android:hint="Category (SUV)" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -143,6 +146,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
+                        android:textColor="@color/onBackground"
                         android:hint="Price / Day ($)" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -178,6 +182,7 @@
                         android:id="@+id/et_fuel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/onBackground"
                         android:hint="Fuel Type" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -197,6 +202,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
+                        android:textColor="@color/onBackground"
                         android:hint="Seats" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -221,6 +227,7 @@
                         android:id="@+id/et_power"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/onBackground"
                         android:hint="Power (670 HP)" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -239,6 +246,7 @@
                         android:id="@+id/et_speed"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/onBackground"
                         android:hint="Speed (250km/h)" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -257,6 +265,7 @@
                     android:id="@+id/et_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/onBackground"
                     android:hint="Location" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -275,6 +284,7 @@
                     android:layout_height="wrap_content"
                     android:minLines="3"
                     android:gravity="top|start"
+                    android:textColor="@color/onBackground"
                     android:hint="Description" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -283,7 +293,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="Save Car"
-                android:textColor="@color/white"
+                android:textColor="@color/onPrimary"
                 android:backgroundTint="@color/primary"
                 app:cornerRadius="30dp"
                 android:fontFamily="@font/urbanist_bold"/>

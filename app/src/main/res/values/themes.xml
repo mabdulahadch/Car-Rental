@@ -9,6 +9,14 @@
         <!-- Default Font Family -->
         <item name="android:fontFamily">@font/urbanist_regular</item>
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+
+        <!-- Ensure text input fields have visible text -->
+        <item name="android:editTextColor">@color/input_text</item>
+        <item name="android:textColorHint">@color/input_hint</item>
+
+        <!-- Material surface colors -->
+        <item name="colorOnSurface">@color/onBackground</item>
+        <item name="colorOnSurfaceVariant">@color/input_hint</item>
     </style>
 
     <style name="Theme.Drivo" parent="Base.Theme.Drivo" />

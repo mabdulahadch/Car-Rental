@@ -88,7 +88,7 @@
                     android:gravity="center"
                     android:paddingHorizontal="20dp"
                     android:text="All"
-                    android:textColor="@color/white"
+                    android:textColor="@color/onPrimary"
                     android:textSize="13sp" />
 
                 <TextView
@@ -460,7 +460,7 @@
             android:fontFamily="@font/urbanist_bold"
             android:text="Show Cars"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/onPrimary"
             app:cornerRadius="26dp" />
     </LinearLayout>
 </LinearLayout>

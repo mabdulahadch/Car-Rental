@@ -63,6 +63,8 @@
             android:id="@+id/et_sr_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/onBackground"
+            android:textColorHint="@color/gray_text"
             android:hint="Showroom Name" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,7 +72,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        app:passwordToggleEnabled="true"
         app:boxCornerRadiusTopStart="16dp"
         app:boxCornerRadiusTopEnd="16dp"
         app:boxCornerRadiusBottomStart="16dp"
@@ -80,7 +81,9 @@
             android:id="@+id/et_sr_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
+            android:inputType="phone"
+            android:textColor="@color/onBackground"
+            android:textColorHint="@color/gray_text"
             android:hint="Phone Number" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,7 +92,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:text="Login"
-        android:textColor="@color/white"
+        android:textColor="@color/onPrimary"
         android:backgroundTint="@color/primary"
         app:cornerRadius="30dp"
         android:fontFamily="@font/urbanist_bold"/>

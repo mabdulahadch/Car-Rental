@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary">
+    android:background="@color/background">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp_onboarding"
@@ -23,8 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:text="Next"
-            android:textColor="@color/primary"
-            android:backgroundTint="@color/white"
+            android:textColor="@color/onPrimary"
+            android:backgroundTint="@color/primary"
             app:cornerRadius="30dp"
             android:fontFamily="@font/urbanist_bold"
             xmlns:app="http://schemas.android.com/apk/res-auto"/>

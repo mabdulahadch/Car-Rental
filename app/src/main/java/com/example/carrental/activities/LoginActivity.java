@@ -1,5 +1,6 @@
 package com.example.carrental.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,42 +28,69 @@ public class LoginActivity extends AppCompatActivity {
 
         sessionManager = new SessionManager(this);
 
+        // If already logged in, just finish
+        if (sessionManager.isLoggedIn()) {
+            finish();
+            return;
+        }
+
         etEmail = findViewById(R.id.et_email);
         etPassword = findViewById(R.id.et_password);
         btnLogin = findViewById(R.id.btn_login);
 
         btnLogin.setOnClickListener(v -> loginUser());
         findViewById(R.id.tv_register).setOnClickListener(v -> {
-            startActivity(new android.content.Intent(this, RegisterActivity.class));
+            startActivity(new Intent(this, RegisterActivity.class));
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // If user just registered and came back, close login
+        if (sessionManager.isLoggedIn()) {
+            finish();
+        }
+    }
+
     private void loginUser() {
-        String email = etEmail.getText().toString();
-        String pass = etPassword.getText().toString();
+        String email = etEmail.getText().toString().trim();
+        String pass = etPassword.getText().toString().trim();
 
         if (email.isEmpty() || pass.isEmpty()) {
-            Toast.makeText(this, "Empty fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        btnLogin.setEnabled(false);
+        btnLogin.setText("Logging in...");
 
         User userReq = new User(email, pass);
         RetrofitClient.getCarApiService().login(userReq).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
+                btnLogin.setEnabled(true);
+                btnLogin.setText("Login");
+
                 if (response.isSuccessful() && response.body() != null) {
-                    sessionManager.createLoginSession(response.body().getId(), response.body().getName(),
-                            response.body().getEmail());
-                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                    User user = response.body();
+                    sessionManager.createLoginSession(
+                            user.getId() != null ? user.getId() : "user",
+                            user.getName() != null ? user.getName() : "User",
+                            user.getEmail() != null ? user.getEmail() : email
+                    );
+                    Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                btnLogin.setEnabled(true);
+                btnLogin.setText("Login");
+                Toast.makeText(LoginActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

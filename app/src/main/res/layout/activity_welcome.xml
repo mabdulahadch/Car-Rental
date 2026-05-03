@@ -59,13 +59,13 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_get_started"
-        style="@style/Widget.Drivo.Button"
+        style="@style/Widget.Material3.Button"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_margin="24dp"
-        android:text="@string/get_started"
+        android:text="Get Started"
         android:textAllCaps="false"
-        android:textColor="@color/primary"
+        android:textColor="@color/onBackground"
         android:fontFamily="@font/urbanist_bold"
         android:backgroundTint="@color/background"
         app:layout_constraintBottom_toBottomOf="parent" />

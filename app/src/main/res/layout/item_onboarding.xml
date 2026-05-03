@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome"
-        android:textColor="@color/white"
+        android:textColor="@color/onBackground"
         android:textSize="28sp"
         android:fontFamily="@font/urbanist_bold"
         android:textAlignment="center"
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Find the best car for your needs."
-        android:textColor="@color/light_grey"
+        android:textColor="@color/gray_text"
         android:textSize="16sp"
         android:textAlignment="center"
         android:fontFamily="@font/urbanist_regular"/>

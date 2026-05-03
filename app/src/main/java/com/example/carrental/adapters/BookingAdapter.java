@@ -26,6 +26,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
 
     private List<Booking> bookings;
     private OnCancelClickListener cancelListener;
+    private boolean isPartnerView = false;
 
     public interface OnCancelClickListener {
         void onCancelClick(Booking booking, int position);
@@ -34,6 +35,10 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
     public BookingAdapter(List<Booking> bookings, OnCancelClickListener listener) {
         this.bookings = bookings;
         this.cancelListener = listener;
+    }
+
+    public void setPartnerView(boolean partnerView) {
+        isPartnerView = partnerView;
     }
 
     @NonNull
@@ -128,8 +133,17 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
             tvReturn.setText(formatDate(booking.getReturnDate()));
             tvDriver.setText(booking.isWithDriver() ? "Yes" : "No");
 
-            // Show cancel button only for PENDING bookings
-            if ("PENDING".equals(status)) {
+            // Action button
+            if (isPartnerView) {
+                btnCancel.setText("Manage Booking");
+                btnCancel.setVisibility(View.VISIBLE);
+                btnCancel.setOnClickListener(v -> {
+                    if (cancelListener != null) {
+                        cancelListener.onCancelClick(booking, position);
+                    }
+                });
+            } else if ("PENDING".equals(status)) {
+                btnCancel.setText("Cancel Booking");
                 btnCancel.setVisibility(View.VISIBLE);
                 btnCancel.setOnClickListener(v -> {
                     if (cancelListener != null) {
@@ -138,6 +152,15 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
                 });
             } else {
                 btnCancel.setVisibility(View.GONE);
+            }
+            
+            // Make whole card clickable for management too
+            if (isPartnerView) {
+                itemView.setOnClickListener(v -> {
+                    if (cancelListener != null) {
+                        cancelListener.onCancelClick(booking, position);
+                    }
+                });
             }
         }
 

@@ -9,7 +9,7 @@
     app:strokeWidth="1dp"
     app:strokeColor="@color/divider"
     app:cardElevation="0dp"
-    android:backgroundTint="@color/white">
+    android:backgroundTint="@color/card_background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,7 +54,7 @@
                     android:text="PKR 25,000"
                     android:textSize="14sp"
                     android:fontFamily="@font/urbanist_bold"
-                    android:textColor="@color/primary" />
+                    android:textColor="@color/accent" />
             </LinearLayout>
 
             <!-- Status Badge -->
@@ -65,7 +65,7 @@
                 android:text="PENDING"
                 android:textSize="11sp"
                 android:fontFamily="@font/urbanist_bold"
-                android:textColor="@color/white"
+                android:textColor="@color/onPrimary"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="4dp"
                 android:background="@drawable/bg_chip_selected" />

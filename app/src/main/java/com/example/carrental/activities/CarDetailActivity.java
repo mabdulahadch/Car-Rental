@@ -1,6 +1,7 @@
 package com.example.carrental.activities;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -79,6 +80,12 @@ public class CarDetailActivity extends AppCompatActivity {
         binding.btnBookNow.setOnClickListener(v -> {
             if (currentCar == null) {
                 Toast.makeText(this, "Car data not loaded yet", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            // Check if user is logged in before allowing booking
+            if (!sessionManager.isLoggedIn()) {
+                Toast.makeText(this, "Please login to book a car", Toast.LENGTH_SHORT).show();
+                startActivity(new android.content.Intent(this, LoginActivity.class));
                 return;
             }
             android.content.Intent intent = new android.content.Intent(this, BookingActivity.class);
